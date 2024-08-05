@@ -2,17 +2,21 @@
 import React, { useEffect, useState } from "react";
 import Logo from "/logo192.png";
 import { Link } from "react-router-dom";
+import Search from "../Section/Search";
 
 export const Header = () => {
-    const [dark, setDark] = useState(JSON.parse(localStorage.getItem("darkMode")) || false);
-useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(dark))
+  const [dark, setDark] = useState(
+    JSON.parse(localStorage.getItem("darkMode")) || false
+  );
+  const [search, showSearch] = useState(false);
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(dark));
     if (dark) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-}, [dark]);
+  }, [dark]);
 
   return (
     <header>
@@ -29,7 +33,10 @@ useEffect(() => {
               className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-gear-wide-connected"
               onClick={() => setDark(!dark)}
             ></span>
-            <span className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-search"></span>
+            <span
+              onClick={() => showSearch(!search)}
+              className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-search"
+            ></span>
             <Link href="/cart" className="text-gray-700 dark:text-white mr-5">
               <span className="text-2xl bi bi-cart-fill relative">
                 <span className="text-white text-sm absolute -top-1 left-2.5 bg-rose-500 px-1 rounded-full ">
@@ -41,6 +48,7 @@ useEffect(() => {
           </div>
         </div>
       </nav>
+      {search && <Search />}
     </header>
   );
 };
