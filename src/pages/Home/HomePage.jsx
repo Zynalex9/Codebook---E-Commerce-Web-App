@@ -3,7 +3,9 @@ import Hero from "./components/Hero";
 import FeaturedProducts from "./components/FeaturedProducts";
 import Testimonials from "./components/Testimonials";
 import Faq from "./components/Faq"
+import useTitle from "../../hooks/useTitle";
 function HomePage() {
+  useTitle("Access World Best Courses - Codebook")
   return (
     <main>
       <Hero />
