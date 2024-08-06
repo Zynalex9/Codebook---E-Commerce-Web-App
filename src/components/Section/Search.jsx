@@ -1,11 +1,12 @@
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export const Search = () => {
+export const Search = ({showSearch}) => {
   const navigate = useNavigate()
   const searchRef = useRef()
   const handleSearch = (e)=>{
     e.preventDefault()
+    showSearch(false)
     navigate(`/products?q=${searchRef.current.value}`)
     console.log(searchRef)
     console.log(e.target.value)

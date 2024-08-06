@@ -48,7 +48,7 @@ export const Header = () => {
           </div>
         </div>
       </nav>
-      {search && <Search />}
+      {search && <Search showSearch={showSearch}/>}
     </header>
   );
 };
