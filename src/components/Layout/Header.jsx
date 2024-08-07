@@ -1,10 +1,10 @@
-// Header.js
 import React, { useEffect, useState } from "react";
 import Logo from "/logo192.png";
 import { Link } from "react-router-dom";
 import Search from "../Section/Search";
-
+import { DropdownLoggedIn, DropdownLoggedOut } from "../index";
 export const Header = () => {
+  const [dropDown, setDropDown] = useState(false)
   const [dark, setDark] = useState(
     JSON.parse(localStorage.getItem("darkMode")) || false
   );
@@ -44,7 +44,8 @@ export const Header = () => {
                 </span>
               </span>
             </Link>
-            <span className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"></span>
+            <span onClick={()=> setDropDown(!dropDown)} className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"></span>
+            {dropDown && <DropdownLoggedOut/>}
           </div>
         </div>
       </nav>
