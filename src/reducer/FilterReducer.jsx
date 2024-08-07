@@ -4,9 +4,9 @@ export const FilterReducer = (state, action) => {
     case "PRODUCT_LIST":
       return { ...state, ProductList: payload.products };
     case "SORT_BY":
-      return;
+      return { ...state, sortBy: payload.sortBy };
     case "RATINGS":
-      return;
+      return { ...state, ratings: payload.ratings };
     case "IN_STOCK_ONLY":
       return { ...state, onlyInStock: payload.inStockOnly };
     case "BEST_SELLER_ONLY":
