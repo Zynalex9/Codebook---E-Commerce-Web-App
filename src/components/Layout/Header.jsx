@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Search from "../Section/Search";
 import { DropdownLoggedIn, DropdownLoggedOut } from "../index";
 export const Header = () => {
+  const token = sessionStorage.getItem("token")
   const [dropDown, setDropDown] = useState(false)
   const [dark, setDark] = useState(
     JSON.parse(localStorage.getItem("darkMode")) || false
@@ -45,7 +46,7 @@ export const Header = () => {
               </span>
             </Link>
             <span onClick={()=> setDropDown(!dropDown)} className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"></span>
-            {dropDown && <DropdownLoggedOut/>}
+            {dropDown && (token? <DropdownLoggedIn/>:<DropdownLoggedOut/>)}
           </div>
         </div>
       </nav>
