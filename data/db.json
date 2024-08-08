@@ -319,6 +319,18 @@
       "password": "$2a$10$ewZJ7uDQKgJEIVRt7/s0.e7f6wcCVb.2sjX7l8yiN.V3pYKkBGoC.",
       "name": "zainali",
       "id": 7
+    },
+    {
+      "email": "zain@gmail.com",
+      "password": "$2a$10$KHSM1tOaNq8AV/uB6eq07.qxzIpHqfXPPaeazwSAB0z4h1uSs3mi.",
+      "name": "zain",
+      "id": 8
+    },
+    {
+      "email": "zainali@gmail.con",
+      "password": "$2a$10$CeOmkBHm8600OTFCD6Q3kOQ6TAIZz2BBnXSG.Sl3fF.DYLh0.ILL2",
+      "name": "zain",
+      "id": 9
     }
   ]
 }

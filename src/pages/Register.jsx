@@ -22,8 +22,8 @@ export const Register = () => {
     if(data.accessToken){
       sessionStorage.setItem("token",JSON.stringify( data.accessToken))
       sessionStorage.setItem("cbid", JSON.stringify(data.user.id))
+      sessionStorage.setItem("email", JSON.stringify(data.user.email))
     }
-    console.log(sessionStorage.getItem("cbid"))
     console.log(data)
   }
     return (
