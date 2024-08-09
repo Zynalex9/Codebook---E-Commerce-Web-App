@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../../../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import useTitle from "../../../hooks/useTitle";
 
 export const Checkout = ({ setCheckOut }) => {
+  useTitle("Checkout")
   const { total, cartList, clearCart } = useCart();
   const [user, setUser] = useState({ name: "", email: "" });
   const navigate = useNavigate();
