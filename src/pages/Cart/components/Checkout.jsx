@@ -3,9 +3,9 @@ import { useCart } from "../../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
 export const Checkout = ({ setCheckOut }) => {
-  const { total, cartList,clearCart } = useCart();
+  const { total, cartList, clearCart } = useCart();
   const [user, setUser] = useState({ name: "", email: "" });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const token = JSON.parse(sessionStorage.getItem("token"));
   const cbid = JSON.parse(sessionStorage.getItem("cbid"));
   useEffect(() => {
@@ -55,9 +55,9 @@ export const Checkout = ({ setCheckOut }) => {
       },
       body: JSON.stringify(order),
     });
-    const data = await response.json()
-    clearCart()
-    navigate('/')
+    const data = await response.json();
+    clearCart();
+    navigate("/order-summary", { state: { data: data, status: true } });
   }
 
   return (
