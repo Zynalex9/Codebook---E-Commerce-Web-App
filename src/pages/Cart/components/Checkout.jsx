@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 export const Checkout = ({ setCheckOut }) => {
-  const { total } = useCart();
-  const [user, setUser] = useState({ name: '', email: '' }); 
-
+  const { total, cartList,clearCart } = useCart();
+  const [user, setUser] = useState({ name: "", email: "" });
+  const navigate = useNavigate()
+  const token = JSON.parse(sessionStorage.getItem("token"));
+  const cbid = JSON.parse(sessionStorage.getItem("cbid"));
   useEffect(() => {
     async function fetchData() {
       try {
-        const token = JSON.parse(sessionStorage.getItem("token"));
-        const cbid = JSON.parse(sessionStorage.getItem("cbid"));
-        const response = await fetch(`http://localhost:3000/600/users/${cbid}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `http://localhost:3000/600/users/${cbid}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -30,6 +34,31 @@ export const Checkout = ({ setCheckOut }) => {
     }
     fetchData();
   }, []);
+
+  async function handleOrderSubmit(event) {
+    event.preventDefault();
+    const order = {
+      cartList: cartList,
+      amount_Paid: total,
+      quantity: cartList.length,
+      user: {
+        name: user.name,
+        email: user.email,
+        id: cbid,
+      },
+    };
+    const response = await fetch("http://localhost:3000/660/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(order),
+    });
+    const data = await response.json()
+    clearCart()
+    navigate('/')
+  }
 
   return (
     <section className="z-50">
@@ -63,7 +92,7 @@ export const Checkout = ({ setCheckOut }) => {
             <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
               <i className="bi bi-credit-card mr-2"></i>CARD PAYMENT
             </h3>
-            <form className="space-y-4">
+            <form onClick={handleOrderSubmit} className="space-y-4">
               <div>
                 <label
                   htmlFor="name"
@@ -76,7 +105,11 @@ export const Checkout = ({ setCheckOut }) => {
                   name="name"
                   id="name"
                   className="w-full p-2.5 text-sm bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-white"
-                  value={user.name ? user.name.charAt(0).toUpperCase() + user.name.slice(1) : ''}
+                  value={
+                    user.name
+                      ? user.name.charAt(0).toUpperCase() + user.name.slice(1)
+                      : ""
+                  }
                   disabled
                   required
                 />
@@ -93,7 +126,7 @@ export const Checkout = ({ setCheckOut }) => {
                   name="email"
                   id="email"
                   className="w-full p-2.5 text-sm bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-white"
-                  value={user.email || ''}
+                  value={user.email || ""}
                   disabled
                   required
                 />
