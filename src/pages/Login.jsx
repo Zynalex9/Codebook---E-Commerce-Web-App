@@ -1,31 +1,21 @@
 import React, { useRef } from "react";
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { login } from "../services";
 export const Login = () => {
-  const email = useRef()
-  const password = useRef()
-  const navigate = useNavigate()
-async function handleLogin(event) {
-  event.preventDefault()
-  const authDetail = {
-    email: email.current.value,
-    password: password.current.value,
+  const email = useRef();
+  const password = useRef();
+  const navigate = useNavigate();
+  async function handleLogin(event) {
+    event.preventDefault();
+    const authDetail = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+    const data = await login(authDetail);
+    data.accessToken ? navigate("/products") : toast.error(data);
+    console.log(data);
   }
-  const requestOptions = {
-    method: "POST",
-    headers:{"content-Type":"application/json"},
-    body:JSON.stringify(authDetail)
-  }
-  const response = await fetch("http://localhost:3000/login",requestOptions)
-  const data = await response.json()
-  data.accessToken ? navigate("/products") : toast.error(data) 
-  console.log(data)
-  if(data.accessToken){
-    sessionStorage.setItem("token",JSON.stringify( data.accessToken))
-    sessionStorage.setItem("cbid", JSON.stringify(data.user.id))
-  }
-}
   return (
     <main>
       <section>
@@ -42,7 +32,7 @@ async function handleLogin(event) {
             Your email
           </label>
           <input
-          ref={email}
+            ref={email}
             type="email"
             id="email"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -59,7 +49,7 @@ async function handleLogin(event) {
             Your password
           </label>
           <input
-          ref={password}
+            ref={password}
             type="password"
             id="password"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

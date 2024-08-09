@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useCart } from "../../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import useTitle from "../../../hooks/useTitle";
+import { createOrder, getUsers } from "../../../services";
 
 export const Checkout = ({ setCheckOut }) => {
-  useTitle("Checkout")
+  useTitle("Checkout");
   const { total, cartList, clearCart } = useCart();
   const [user, setUser] = useState({ name: "", email: "" });
   const navigate = useNavigate();
@@ -12,52 +13,15 @@ export const Checkout = ({ setCheckOut }) => {
   const cbid = JSON.parse(sessionStorage.getItem("cbid"));
   useEffect(() => {
     async function fetchData() {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/600/users/${cbid}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setUser(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+      const data = await getUsers();
+      setUser(data);
     }
     fetchData();
   }, []);
 
   async function handleOrderSubmit(event) {
     event.preventDefault();
-    const order = {
-      cartList: cartList,
-      amount_Paid: total,
-      quantity: cartList.length,
-      user: {
-        name: user.name,
-        email: user.email,
-        id: cbid,
-      },
-    };
-    const response = await fetch("http://localhost:3000/660/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(order),
-    });
-    const data = await response.json();
+    const data = await createOrder(cartList, total, user);
     clearCart();
     navigate("/order-summary", { state: { data: data, status: true } });
   }
