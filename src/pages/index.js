@@ -4,6 +4,7 @@ export {default as ProductDetail} from "./ProductDetail.jsx"
 
 export {default as CartPage} from "./Cart/CartPage.jsx"
 export {default as OrderPage} from "./Order/OrderPage.jsx"
+export {default as DashboardPage} from "./Dashboard/DashboardPage.jsx"
 
 
 
