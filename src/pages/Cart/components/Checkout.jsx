@@ -3,7 +3,8 @@ import { useCart } from "../../../context/CartContext";
 
 export const Checkout = ({ setCheckOut }) => {
   const { total } = useCart();
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({ name: '', email: '' }); 
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -12,25 +13,24 @@ export const Checkout = ({ setCheckOut }) => {
         const response = await fetch(`http://localhost:3000/600/users/${cbid}`, {
           method: "GET",
           headers: {
-            "Content-Type": "Application/json",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         });
-  
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-  
+
         const data = await response.json();
-       setUser(data);
-       console.log(user)
+        setUser(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
     fetchData();
   }, []);
-  
+
   return (
     <section className="z-50">
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-40">
@@ -93,7 +93,7 @@ export const Checkout = ({ setCheckOut }) => {
                   name="email"
                   id="email"
                   className="w-full p-2.5 text-sm bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-white"
-                  value={user.email}
+                  value={user.email || ''}
                   disabled
                   required
                 />

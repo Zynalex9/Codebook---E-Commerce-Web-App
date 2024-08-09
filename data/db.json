@@ -331,6 +331,12 @@
       "password": "$2a$10$CeOmkBHm8600OTFCD6Q3kOQ6TAIZz2BBnXSG.Sl3fF.DYLh0.ILL2",
       "name": "zain",
       "id": 9
+    },
+    {
+      "email": "zain@abc.com",
+      "password": "$2a$10$hiTn666YSD3.N0RdEzGlMeHbIP4d6HgWxSskZol22ayCl5PwpWvBa",
+      "name": "zain",
+      "id": 10
     }
   ]
 }
