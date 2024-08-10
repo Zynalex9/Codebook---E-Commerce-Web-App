@@ -17,7 +17,7 @@ export const CartList = () => {
 
       <section>
         {cartList.map((product) => (
-          <CartCard product={product} />
+          <CartCard key={product.id} product={product} />
         ))}
       </section>
 

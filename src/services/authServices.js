@@ -4,7 +4,10 @@ export async function login(authDetail) {
     headers: { "content-Type": "application/json" },
     body: JSON.stringify(authDetail),
   };
-  const response = await fetch("http://localhost:3000/login", requestOptions);
+  const response = await fetch(`${import.meta.env.VITE_API_KEY}/login`, requestOptions);
+  if (!response.ok) {
+    throw { message: response.statusText, status: response.status };
+  }
   const data = await response.json();
   if (data.accessToken) {
     sessionStorage.setItem("token", JSON.stringify(data.accessToken));
@@ -18,7 +21,10 @@ export async function register(authDetail) {
         headers:{"content-Type":"application/json"},
         body:JSON.stringify(authDetail)
       }
-      const response = await fetch("http://localhost:3000/register",requestOptions)
+      const response = await fetch(`${import.meta.env.VITE_API_KEY}/register`, requestOptions)
+      if (!response.ok) {
+        throw { message: response.statusText, status: response.status };
+      }
       const data = await response.json()
       if(data.accessToken){
         sessionStorage.setItem("token",JSON.stringify( data.accessToken))

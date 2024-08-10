@@ -1,14 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { getUsers, logout } from "../../services";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export const DropdownLoggedIn = ({ setDropDown }) => {
     const [user,setUser] = useState({})
   const navigate = useNavigate();
   useEffect(() => {
     async function fetchUsers() {
-      const data = await getUsers();
-      data.email ? setUser(data) : logout()
+        const data = await getUsers();
+        data.email ? setUser(data) : logout()
     }
     fetchUsers()
   },[]);

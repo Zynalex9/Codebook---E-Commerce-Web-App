@@ -3,6 +3,7 @@ import { useCart } from "../../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import useTitle from "../../../hooks/useTitle";
 import { createOrder, getUsers } from "../../../services";
+import { toast } from "react-toastify";
 
 export const Checkout = ({ setCheckOut }) => {
   useTitle("Checkout");
@@ -21,9 +22,23 @@ export const Checkout = ({ setCheckOut }) => {
 
   async function handleOrderSubmit(event) {
     event.preventDefault();
-    const data = await createOrder(cartList, total, user);
-    clearCart();
-    navigate("/order-summary", { state: { data: data, status: true } });
+    try {
+      const data = await createOrder(cartList, total, user);
+      clearCart();
+      navigate("/order-summary", { state: { data: data, status: true } });
+    } catch (error) {
+      toast.error(error.message, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      navigate("/order-summary", { state: { data: data, status: false } });
+    }
   }
 
   return (
