@@ -1,31 +1,27 @@
 const token = JSON.parse(sessionStorage.getItem("token"));
 const cbid = JSON.parse(sessionStorage.getItem("cbid"));
 export async function getUsers() {
-  
-    try {
-        const response = await fetch(
-          `http://localhost:3000/600/users/${cbid}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+  try {
+    const response = await fetch(`http://localhost:3000/600/users/${cbid}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-        const data = await response.json();
-        return data
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 }
 
-export async function createOrder(cartList,total,user) {
+export async function createOrder(cartList, total, user) {
   const order = {
     cartList: cartList,
     amount_Paid: total,
@@ -44,6 +40,20 @@ export async function createOrder(cartList,total,user) {
     },
     body: JSON.stringify(order),
   });
-  const data = await response.json()
+  const data = await response.json();
+  return data;
+}
+export async function getUserOrders() {
+  const response = await fetch(
+    `http://localhost:3000/660/orders?user.id=${cbid}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await response.json();
   return data
 }

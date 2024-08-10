@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DashboardCard from "./components/DashboardCard";
 import DashboardEmpty from "./components/DashboardEmpty";
 import useTitle from "../../hooks/useTitle";
+import { getUserOrders } from "../../services";
 
 export const DashboardPage = () => {
   useTitle("Dashboard")
@@ -10,17 +11,17 @@ export const DashboardPage = () => {
   const cbid = JSON.parse(sessionStorage.getItem("cbid"));
   useEffect(() => {
     async function fetchOrders() {
-      const response = await fetch(
-        `http://localhost:3000/660/orders?user.id=${cbid}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
+      // const response = await fetch(
+      //   `http://localhost:3000/660/orders?user.id=${cbid}`,
+      //   {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
+       const data = await getUserOrders();
       setOrders(data);
     }
     fetchOrders();

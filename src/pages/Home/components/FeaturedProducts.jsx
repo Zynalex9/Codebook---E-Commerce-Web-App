@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ProductCard } from "../../../components/Element/ProductCard";
+import { getFeaturedList } from "../../../services";
 export const FeaturedProducts = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     async function fetchProducts() {
-      const response = await fetch("http://localhost:3000/featured_products");
-      const data = await response.json();
+      const data = await getFeaturedList();
       setProducts(data);
     }
     fetchProducts();
@@ -23,4 +23,4 @@ export const FeaturedProducts = () => {
     </section>
   );
 };
-export default FeaturedProducts; 
+export default FeaturedProducts;
