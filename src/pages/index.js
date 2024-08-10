@@ -6,7 +6,7 @@ export {default as CartPage} from "./Cart/CartPage.jsx"
 export {default as OrderPage} from "./Order/OrderPage.jsx"
 export {default as DashboardPage} from "./Dashboard/DashboardPage.jsx"
 
-
-
 export {default as Login} from "./Login.jsx"
 export {default as Register} from "./Register.jsx"
+
+export {default as PageNotFound} from "./PageNotFound.jsx"

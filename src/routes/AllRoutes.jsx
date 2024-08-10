@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import React from 'react'
-import { HomePage, ProductLists,ProductDetail, Login, Register, CartPage, OrderPage, DashboardPage } from '../pages'
+import { HomePage, ProductLists,ProductDetail, Login, Register, CartPage, OrderPage, DashboardPage, PageNotFound } from '../pages'
 import ProtectRoute from './ProtectRoute'
 
 function AllRoutes() {
@@ -15,6 +15,7 @@ function AllRoutes() {
         <Route path='cart' element={<ProtectRoute><CartPage/></ProtectRoute>}/> 
         <Route path='order-summary' element={<ProtectRoute><OrderPage/></ProtectRoute>}/> 
         <Route path='dashboard' element={<ProtectRoute><DashboardPage/></ProtectRoute>}/> 
+        <Route path='*' element={<PageNotFound/>}/> 
     </Routes>
     </>
   )
