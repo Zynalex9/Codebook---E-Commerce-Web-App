@@ -5,9 +5,10 @@ import { useLocation } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import { useFilter } from "../../context/FilterContext";
 import { getProductList } from "../../services";
+import { toast } from "react-toastify";
 
 export const ProductsList = () => {
- const { ProductList, initialProducts } = useFilter();
+  const { ProductList, initialProducts } = useFilter();
   const [show, setShow] = useState(false);
   const search = useLocation().search;
   const searchTerm = new URLSearchParams(search).get("q");
@@ -15,12 +16,24 @@ export const ProductsList = () => {
 
   useEffect(() => {
     async function fetchProducts() {
-      const data = await getProductList(searchTerm)
-      initialProducts(data);
+      try {
+        const data = await getProductList(searchTerm);
+        initialProducts(data);
+      } catch (error) {
+        toast.error(error.message, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
     }
     fetchProducts();
-  }, [searchTerm]); 
-
+  }, [searchTerm]);
 
   return (
     <main>
